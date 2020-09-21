@@ -1,0 +1,55 @@
+# location: C:\Users\UserName\AppData\Roaming\alacritty\alacritty.yml
+
+window:
+  # Window dimensions (changes require restart)
+  #
+  # Specified in number of columns/lines, not pixels.
+  # If both are `0`, this setting is ignored.
+  #dimensions:
+  # columns: 200
+  # lines: 0
+
+  # Window position (changes require restart)
+  #
+  # Specified in number of pixels.
+  # If the position is not set, the window manager will handle the placement.
+  #position:
+  x: 0
+  y: 0
+
+  # Window padding (changes require restart)
+  #
+  # Blank space added around the window in pixels. This padding is scaled
+  # by DPI and the specified value is always added at both opposing sides.
+  #padding:
+  #  x: 0
+  #  y: 0
+
+  # Spread additional padding evenly around the terminal content.
+  dynamic_padding: true
+  # title: "Nasim"
+  # dynamic_title: true
+
+font:
+  normal:
+    family: "Space Mono"
+    style: Regular
+
+  bold:
+    family: "Space Mono"
+    style: Bold
+
+  size: 14
+
+cursor:
+  style: Beam
+  thickness: 0.15
+
+background_opacity: 0.94
+
+colors:
+  primary:
+    background: "#1d1f21"
+    foreground: "#c5c8c6"
+
+working_directory: "f:"
