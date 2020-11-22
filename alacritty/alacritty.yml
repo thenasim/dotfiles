@@ -5,17 +5,17 @@ window:
   #
   # Specified in number of columns/lines, not pixels.
   # If both are `0`, this setting is ignored.
-  #dimensions:
-  # columns: 200
-  # lines: 0
+  dimensions:
+    columns: 100 
+    lines: 26
 
   # Window position (changes require restart)
   #
   # Specified in number of pixels.
   # If the position is not set, the window manager will handle the placement.
-  #position:
-  x: 0
-  y: 0
+  position:
+    x: 400
+    y: 200
 
   # Window padding (changes require restart)
   #
@@ -32,24 +32,24 @@ window:
 
 font:
   normal:
-    family: "Space Mono"
+    family: "FiraCode Nerd Font"
     style: Regular
 
   bold:
-    family: "Space Mono"
+    family: "FiraCode Nerd Font"
     style: Bold
 
-  size: 14
+  size: 15
 
 cursor:
   style: Beam
   thickness: 0.15
 
-background_opacity: 0.94
+background_opacity: 0.98
 
 colors:
   primary:
     background: "#1d1f21"
     foreground: "#c5c8c6"
 
-working_directory: "f:"
+working_directory: "/home/nasim/Work/"
