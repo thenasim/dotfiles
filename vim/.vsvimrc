@@ -1,44 +1,175 @@
-" Backspace
+" ============================================================================
+" BASIC SETTINGS
+" ============================================================================
+
+" Backspace behavior - allows backspace to work over indentation, 
+" line breaks, and the start of insert mode
 set backspace=indent,eol,start
 
-" Remap VIM 0 to first non-blank character
+" Line numbers and relative numbers
+set relativenumber  " Show relative line numbers for easier jumping
+set number          " Also show current line number
+
+" Highlight search results while typing
+set incsearch
+set hlsearch
+
+" Clear search highlighting with Space+/ 
+:nnoremap <space>/ :nohlsearch<cr>
+
+" ============================================================================
+" NAVIGATION IMPROVEMENTS
+" ============================================================================
+
+" Remap 0 to jump to first non-blank character (^) instead of line start
+" Useful because you typically want to jump to where code starts, not column 0
 map 0 ^
 
-" Map jk to normal mode
+" ============================================================================
+" MODE SWITCHING
+" ============================================================================
+
+" Quick escape from insert mode - type 'jk' rapidly to return to normal mode
+" Much faster than reaching for ESC key
 :inoremap jk <esc>
 
-" Space + b to match brackets
-:nnoremap <space>b %
-
-
-" Map brackets with letter
-:nnoremap dij di)
-:nnoremap daj da)
-:nnoremap cij ci)
-:nnoremap caj ca)
-:nnoremap yij yi)
-:nnoremap yaj ya)
-
-:nnoremap dik di}
-:nnoremap dak da}
-:nnoremap cik ci}
-:nnoremap cak ca}
-:nnoremap yik yi}
-:nnoremap yak ya}
-
-:nnoremap dil di]
-:nnoremap dal da]
-:nnoremap cil ci]
-:nnoremap cal ca]
-:nnoremap yil yi]
-:nnoremap yal ya]
-
-
-" Visual mode space as esc
+" Exit visual mode quickly with spacebar
+" Provides a larger, easier-to-reach alternative to ESC
 :xnoremap <space> <esc>
 
-" Move a line of text 
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+" ============================================================================
+" BRACKET MATCHING
+" ============================================================================
+
+" Jump to matching bracket with Space+b
+" Default % works but Space+b is more convenient for some users
+:nnoremap <space>b %
+
+" ============================================================================
+" BRACKET TEXT OBJECTS - Mnemonic Mappings
+" ============================================================================
+" These provide intuitive letter-based shortcuts for working with brackets
+" Pattern: <action><i/a><letter> where letter hints at the bracket type
+"   - 'i' = inside (excludes brackets)
+"   - 'a' = around (includes brackets)
+"   - 'j' for ) (think: j looks like a curved bracket)
+"   - 'k' for } (think: k has angles like braces)
+"   - 'l' for ] (think: l is next to k, completes the set)
+
+" --- PARENTHESES () operations using 'j' ---
+:nnoremap dij di)    " Delete inside parentheses
+:nnoremap daj da)    " Delete around parentheses (includes the parens)
+:nnoremap cij ci)    " Change inside parentheses
+:nnoremap caj ca)    " Change around parentheses
+:nnoremap yij yi)    " Yank (copy) inside parentheses
+:nnoremap yaj ya)    " Yank around parentheses
+
+" --- CURLY BRACES {} operations using 'k' ---
+:nnoremap dik di}    " Delete inside braces
+:nnoremap dak da}    " Delete around braces
+:nnoremap cik ci}    " Change inside braces
+:nnoremap cak ca}    " Change around braces
+:nnoremap yik yi}    " Yank inside braces
+:nnoremap yak ya}    " Yank around braces
+
+" --- SQUARE BRACKETS [] operations using 'l' ---
+:nnoremap dil di]    " Delete inside brackets
+:nnoremap dal da]    " Delete around brackets
+:nnoremap cil ci]    " Change inside brackets
+:nnoremap cal ca]    " Change around brackets
+:nnoremap yil yi]    " Yank inside brackets
+:nnoremap yal ya]    " Yank around brackets
+
+" ============================================================================
+" LINE MOVEMENT
+" ============================================================================
+" Move lines up/down with Alt+j/k (preserves indentation and cursor position)
+" Uses marks (mz) to remember position and restore it after movement
+
+" Normal mode - move current line
+nmap <M-j> mz:m+<cr>`z         " Alt+j: Move line down
+nmap <M-k> mz:m-2<cr>`z        " Alt+k: Move line up
+
+" Visual mode - move selected lines
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z   " Alt+j: Move selection down
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z  " Alt+k: Move selection up
+
+" ============================================================================
+" CODE NAVIGATION & REFERENCES
+" ============================================================================
+
+" Find all references to symbol under cursor (like Shift+F12 in VS)
+:nnoremap gr :vsc Edit.FindAllReferences<cr>
+
+" Go to definition (default 'gd' works, but this ensures VS's Go To Definition)
+:nnoremap gd :vsc Edit.GoToDefinition<cr>
+
+" Go to implementation (useful for interfaces)
+:nnoremap gi :vsc Edit.GoToImplementation<cr>
+
+" Peek definition (shows definition in popup without leaving current file)
+:nnoremap gp :vsc Edit.PeekDefinition<cr>
+
+" Go back to previous location (after jumping to definition)
+:nnoremap gb :vsc View.NavigateBackward<cr>
+
+" Go forward in navigation history
+:nnoremap gf :vsc View.NavigateForward<cr>
+
+" ============================================================================
+" FIND & SEARCH
+" ============================================================================
+
+" Quick search in solution (Ctrl+T equivalent)
+:nnoremap <space>f :vsc Edit.GoToAll<cr>
+
+" Find in files (solution-wide search)
+:nnoremap <space>F :vsc Edit.FindinFiles<cr>
+
+" Find symbol in current file
+:nnoremap <space>s :vsc Edit.GoToSymbol<cr>
+
+" ============================================================================
+" CODE INSPECTION
+" ============================================================================
+
+" Show quick info (tooltip/intellisense on hover - Ctrl+K, Ctrl+I)
+:nnoremap K :vsc Edit.QuickInfo<cr>
+
+" Parameter info (shows method signature)
+:nnoremap <space>p :vsc Edit.ParameterInfo<cr>
+
+" Show error list
+:nnoremap <space>e :vsc View.ErrorList<cr>
+
+" Navigate to next error
+:nnoremap ]e :vsc View.NextError<cr>
+
+" Navigate to previous error
+:nnoremap [e :vsc View.PreviousError<cr>
+
+" ============================================================================
+" REFACTORING
+" ============================================================================
+
+" Rename symbol (F2 equivalent)
+:nnoremap <space>r :vsc Refactor.Rename<cr>
+
+" Extract method
+:vnoremap <space>em :vsc Refactor.ExtractMethod<cr>
+
+" Quick actions and refactorings (Ctrl+. equivalent)
+:nnoremap <space>. :vsc View.QuickActions<cr>
+
+" ============================================================================
+" CODE STRUCTURE
+" ============================================================================
+
+" Go to next member (method/property)
+:nnoremap ]m :vsc Edit.NextMethod<cr>
+
+" Go to previous member
+:nnoremap [m :vsc Edit.PreviousMethod<cr>
+
+" Toggle outlining expansion (fold/unfold code block)
+:nnoremap <space>z :vsc Edit.ToggleOutliningExpansion<cr>
